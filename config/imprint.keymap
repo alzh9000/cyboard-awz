@@ -1,6 +1,14 @@
+// ALZHANG: Generated from row_shift_layers_keyboard_tool.py config
+// ALZHANG: Modified layers: default_layer, commands_1, commands_2, commands_3
+
 #include <input/processors.dtsi>
 #include <dt-bindings/zmk/input_transform.h>
+
+#define ZMK_POINTING_DEFAULT_MOVE_VAL 930 // default: 600
+#define ZMK_POINTING_DEFAULT_SCRL_VAL 22 // default: 10
+
 #include <behaviors.dtsi>
+#include <dt-bindings/zmk/backlight.h>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/pointing.h>
@@ -9,19 +17,561 @@
 / {
     chosen { zmk,matrix-transform = &imprint_function_row_full_bottom_row; };
 
+    macros {
+        fast_scroll_down: fast_scroll_down {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&msc SCRL_DOWN &msc SCRL_DOWN &msc SCRL_DOWN &msc SCRL_DOWN &msc SCRL_DOWN>;
+            label = "FAST_SCROLL_DOWN";
+        };
+
+        fast_scroll_up: fast_scroll_up {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&msc SCRL_UP &msc SCRL_UP &msc SCRL_UP &msc SCRL_UP &msc SCRL_UP>;
+            label = "FAST_SCROLL_UP";
+        };
+
+        fast_mouse_left: fast_mouse_left {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&mmv MOVE_LEFT &mmv MOVE_LEFT &mmv MOVE_LEFT &mmv MOVE_LEFT &mmv MOVE_LEFT>;
+            label = "FAST_MOUSE_LEFT";
+        };
+
+        fast_mouse_right: fast_mouse_right {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&mmv MOVE_RIGHT &mmv MOVE_RIGHT &mmv MOVE_RIGHT &mmv MOVE_RIGHT &mmv MOVE_RIGHT>;
+            label = "FAST_MOUSE_RIGHT";
+        };
+
+        fast_mouse_up: fast_mouse_up {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&mmv MOVE_UP &mmv MOVE_UP &mmv MOVE_UP &mmv MOVE_UP &mmv MOVE_UP>;
+            label = "FAST_MOUSE_UP";
+        };
+
+        fast_move_down: fast_move_down {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&mmv MOVE_DOWN &mmv MOVE_DOWN &mmv MOVE_DOWN &mmv MOVE_DOWN &mmv MOVE_DOWN>;
+            label = "FAST_MOVE_DOWN";
+        };
+
+        diag_left_down: diag_left_down {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&mmv MOVE_DOWN &mmv MOVE_LEFT &mmv MOVE_DOWN &mmv MOVE_LEFT &mmv MOVE_DOWN &mmv MOVE_LEFT>;
+            label = "DIAG_LEFT_UP";
+        };
+
+        diag_right_down: diag_right_down {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&mmv MOVE_DOWN &mmv MOVE_RIGHT &mmv MOVE_DOWN &mmv MOVE_RIGHT &mmv MOVE_DOWN &mmv MOVE_RIGHT>;
+            label = "DIAG_RIGHT_DOWN";
+        };
+
+        diag_left_up1: diag_left_up {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&mmv MOVE_UP &mmv MOVE_LEFT &mmv MOVE_UP &mmv MOVE_LEFT &mmv MOVE_UP &mmv MOVE_LEFT>;
+            label = "DIAG_LEFT_UP";
+        };
+
+        diag_right_up: diag_right_up {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&mmv MOVE_UP &mmv MOVE_RIGHT &mmv MOVE_UP &mmv MOVE_RIGHT &mmv MOVE_UP &mmv MOVE_RIGHT>;
+            label = "DIAG_RIGHT_UP";
+        };
+
+        shift_left_click: shift_left_click {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&mkp LCLK &kp LEFT_SHIFT>;
+            label = "SHIFT_LEFT_CLICK";
+        };
+
+        hold_left_click: hold_left_click {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&macro_press>, <&mkp LCLK>;
+
+            label = "HOLD_LEFT_CLICK";
+        };
+
+        release_left_click: release_left_click {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&macro_release>, <&mkp LCLK>;
+
+            label = "RELEASE_LEFT_CLICK";
+        };
+
+        click_command: click_command {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&mkp LCLK &kp LEFT_GUI>;
+            label = "CLICK_COMMAND";
+        };
+
+        fast_up: fast_up {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings =
+                <&macro_wait_time 1>,
+                <&kp UP_ARROW &kp UP_ARROW &kp UP_ARROW &kp UP_ARROW>;
+
+            label = "FAST_UP";
+        };
+
+        fast_down: fast_down {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings =
+                <&macro_wait_time 1>,
+                <&kp DOWN_ARROW &kp DOWN_ARROW &kp DOWN_ARROW &kp DOWN_ARROW>;
+
+            label = "FAST_DOWN";
+        };
+
+        ff_up: ff_up {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&macro_wait_time 1>, <&fast_up &fast_up &fast_up>;
+
+            label = "FF_UP";
+        };
+
+        ff_down: ff_down {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&macro_wait_time 1>, <&fast_down &fast_down &fast_down>;
+
+            label = "FF_DOWN";
+        };
+
+        fff_up: fff_up {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&macro_wait_time 1>, <&ff_up &ff_up &ff_up>;
+
+            label = "FFF_UP";
+        };
+
+        fff_down: fff_down {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&macro_wait_time 1>, <&ff_down &ff_down &ff_down>;
+
+            label = "FFF_DOWN";
+        };
+    };
+
+    // ALZHANG: Home row mods behaviors with ZMK best practices
+
+    behaviors {
+        // ALZHANG: Home row mod for layer activation
+        // Uses balanced flavor, require-prior-idle, and hold-trigger-on-release for better chording
+
+        hm_layer: hm_layer {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <300>;
+            quick-tap-ms = <200>;
+            require-prior-idle-ms = <150>;
+            flavor = "balanced";
+            bindings = <&mo>, <&kp>;
+
+            hold-trigger-on-release;
+
+            // hold = momentary layer, tap = keypress
+        };
+
+        // ALZHANG: Home row mod for modifiers (Shift, Ctrl, Alt, GUI)
+        // Enables same-hand modifier chording with hold-trigger-on-release
+
+        hm_mod: hm_mod {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <300>;
+            quick-tap-ms = <200>;
+            require-prior-idle-ms = <150>;
+            flavor = "balanced";
+            bindings = <&kp>, <&kp>;
+
+            hold-trigger-on-release;
+
+            // both are keypresses
+        };
+
+        // ALZHANG: 250ms timing variant (F6 layer, 75% quick-tap ratio)
+
+        hm_layer_250: hm_layer_250 {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <250>;
+            quick-tap-ms = <188>;
+            require-prior-idle-ms = <125>;
+            flavor = "balanced";
+            bindings = <&mo>, <&kp>;
+
+            hold-trigger-on-release;
+        };
+
+        hm_mod_250: hm_mod_250 {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <250>;
+            quick-tap-ms = <188>;
+            require-prior-idle-ms = <125>;
+            flavor = "balanced";
+            bindings = <&kp>, <&kp>;
+
+            hold-trigger-on-release;
+        };
+
+        // ALZHANG: 200ms timing variant (F7 layer, 75% quick-tap ratio)
+
+        hm_layer_200: hm_layer_200 {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+            quick-tap-ms = <150>;
+            require-prior-idle-ms = <100>;
+            flavor = "balanced";
+            bindings = <&mo>, <&kp>;
+
+            hold-trigger-on-release;
+        };
+
+        hm_mod_200: hm_mod_200 {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+            quick-tap-ms = <150>;
+            require-prior-idle-ms = <100>;
+            flavor = "balanced";
+            bindings = <&kp>, <&kp>;
+
+            hold-trigger-on-release;
+        };
+
+        // ALZHANG: 165ms timing variant (F8 layer, 75% quick-tap ratio)
+
+        hm_layer_165: hm_layer_165 {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <165>;
+            quick-tap-ms = <124>;
+            require-prior-idle-ms = <85>;
+            flavor = "balanced";
+            bindings = <&mo>, <&kp>;
+
+            hold-trigger-on-release;
+        };
+
+        hm_mod_165: hm_mod_165 {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <165>;
+            quick-tap-ms = <124>;
+            require-prior-idle-ms = <85>;
+            flavor = "balanced";
+            bindings = <&kp>, <&kp>;
+
+            hold-trigger-on-release;
+        };
+
+        // ALZHANG: 140ms timing variant (F9 layer, 75% quick-tap ratio)
+
+        hm_layer_140: hm_layer_140 {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <140>;
+            quick-tap-ms = <105>;
+            require-prior-idle-ms = <70>;
+            flavor = "balanced";
+            bindings = <&mo>, <&kp>;
+
+            hold-trigger-on-release;
+        };
+
+        hm_mod_140: hm_mod_140 {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <140>;
+            quick-tap-ms = <105>;
+            require-prior-idle-ms = <70>;
+            flavor = "balanced";
+            bindings = <&kp>, <&kp>;
+
+            hold-trigger-on-release;
+        };
+
+        // ALZHANG: Slow timing variants (30% increase) for keys not under strongest fingers
+        // Base 300ms -> 390ms
+
+        hm_layer_slow: hm_layer_slow {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <390>;
+            quick-tap-ms = <260>;
+            require-prior-idle-ms = <195>;
+            flavor = "balanced";
+            bindings = <&mo>, <&kp>;
+
+            hold-trigger-on-release;
+        };
+
+        hm_mod_slow: hm_mod_slow {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <390>;
+            quick-tap-ms = <260>;
+            require-prior-idle-ms = <195>;
+            flavor = "balanced";
+            bindings = <&kp>, <&kp>;
+
+            hold-trigger-on-release;
+        };
+
+        // ALZHANG: 250ms -> 325ms (30% increase)
+
+        hm_layer_slow_250: hm_layer_slow_250 {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <325>;
+            quick-tap-ms = <244>;
+            require-prior-idle-ms = <163>;
+            flavor = "balanced";
+            bindings = <&mo>, <&kp>;
+
+            hold-trigger-on-release;
+        };
+
+        hm_mod_slow_250: hm_mod_slow_250 {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <325>;
+            quick-tap-ms = <244>;
+            require-prior-idle-ms = <163>;
+            flavor = "balanced";
+            bindings = <&kp>, <&kp>;
+
+            hold-trigger-on-release;
+        };
+
+        // ALZHANG: 200ms -> 260ms (30% increase)
+
+        hm_layer_slow_200: hm_layer_slow_200 {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <260>;
+            quick-tap-ms = <195>;
+            require-prior-idle-ms = <130>;
+            flavor = "balanced";
+            bindings = <&mo>, <&kp>;
+
+            hold-trigger-on-release;
+        };
+
+        hm_mod_slow_200: hm_mod_slow_200 {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <260>;
+            quick-tap-ms = <195>;
+            require-prior-idle-ms = <130>;
+            flavor = "balanced";
+            bindings = <&kp>, <&kp>;
+
+            hold-trigger-on-release;
+        };
+
+        // ALZHANG: 165ms -> 215ms (30% increase)
+
+        hm_layer_slow_165: hm_layer_slow_165 {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <215>;
+            quick-tap-ms = <161>;
+            require-prior-idle-ms = <111>;
+            flavor = "balanced";
+            bindings = <&mo>, <&kp>;
+
+            hold-trigger-on-release;
+        };
+
+        hm_mod_slow_165: hm_mod_slow_165 {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <215>;
+            quick-tap-ms = <161>;
+            require-prior-idle-ms = <111>;
+            flavor = "balanced";
+            bindings = <&kp>, <&kp>;
+
+            hold-trigger-on-release;
+        };
+
+        // ALZHANG: 140ms -> 182ms (30% increase)
+
+        hm_layer_slow_140: hm_layer_slow_140 {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <182>;
+            quick-tap-ms = <137>;
+            require-prior-idle-ms = <91>;
+            flavor = "balanced";
+            bindings = <&mo>, <&kp>;
+
+            hold-trigger-on-release;
+        };
+
+        hm_mod_slow_140: hm_mod_slow_140 {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <182>;
+            quick-tap-ms = <137>;
+            require-prior-idle-ms = <91>;
+            flavor = "balanced";
+            bindings = <&kp>, <&kp>;
+
+            hold-trigger-on-release;
+        };
+
+        // ALZHANG: Super modifier hold-tap (hold = all mods, tap = key)
+        // Uses slow timing (390ms base) since not under strongest fingers
+
+        hm_super: hm_super {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <390>;
+            quick-tap-ms = <260>;
+            require-prior-idle-ms = <195>;
+            flavor = "balanced";
+            bindings = <&kp>, <&kp>;
+
+            hold-trigger-on-release;
+        };
+
+        hm_super_250: hm_super_250 {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <325>;
+            quick-tap-ms = <244>;
+            require-prior-idle-ms = <163>;
+            flavor = "balanced";
+            bindings = <&kp>, <&kp>;
+
+            hold-trigger-on-release;
+        };
+
+        hm_super_200: hm_super_200 {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <260>;
+            quick-tap-ms = <195>;
+            require-prior-idle-ms = <130>;
+            flavor = "balanced";
+            bindings = <&kp>, <&kp>;
+
+            hold-trigger-on-release;
+        };
+
+        hm_super_165: hm_super_165 {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <215>;
+            quick-tap-ms = <161>;
+            require-prior-idle-ms = <111>;
+            flavor = "balanced";
+            bindings = <&kp>, <&kp>;
+
+            hold-trigger-on-release;
+        };
+
+        hm_super_140: hm_super_140 {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <182>;
+            quick-tap-ms = <137>;
+            require-prior-idle-ms = <91>;
+            flavor = "balanced";
+            bindings = <&kp>, <&kp>;
+
+            hold-trigger-on-release;
+        };
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
         default_layer {
             bindings = <
-&kp ESC    &kp F1  &kp F2    &kp F3    &kp F4    &kp F5              &kp F6     &kp F7    &kp F8     &kp F9    &kp F10   &kp F11
-&kp EQUAL  &kp N1  &kp N2    &kp N3    &kp N4    &kp N5              &kp N6     &kp N7    &kp N8     &kp N9    &kp N0    &kp MINUS
-&kp TAB    &kp Q   &kp W     &kp E     &kp R     &kp T               &kp Y      &kp U     &kp I      &kp O     &kp P     &kp BSLH
-&kp LCTRL  &kp A   &kp S     &kp D     &kp F     &kp G               &kp H      &kp J     &kp K      &kp L     &kp SEMI  &kp SQT
-&kp LSHFT  &kp Z   &kp X     &kp C     &kp V     &kp B               &kp N      &kp M     &kp COMMA  &kp DOT   &kp FSLH  &kp RSHFT
-&trans     &trans  &kp LGUI  &kp LALT  &trans                                   &trans    &kp LBKT   &kp RBKT  &trans    &trans
-                                       &kp RET   &kp DEL  &kp ESC    &kp GRAVE  &kp BSPC  &kp SPACE
-                                       &kp LGUI  &mo 1    &mo 2      &kp CAPS   &mo 2     &mo 1
+&to 6      &bt BT_NXT                     &bt BT_SEL 0          &bt BT_SEL 1         &bt BT_PRV                     &bt BT_CLR                               &tog 1                &tog 2                         &tog 3               &tog 4                &to 0                          &kp F11
+&kp GRAVE  &kp N1                         &kp N2                &kp N3               &kp N4                         &kp N5                                   &kp N6                &kp N7                         &kp N8               &kp N9                &kp N0                         &kp LCTRL
+&kp LCTRL  &hm_super LS(LA(LG(LCTRL))) Q  &hm_mod_slow LCTRL W  &hm_mod_slow LALT E  &hm_super LS(LA(LG(LCTRL))) R  &hm_mod_slow LSHFT T                     &hm_mod_slow RSHFT Y  &hm_super LS(LA(LG(LCTRL))) U  &hm_mod_slow LALT I  &hm_mod_slow LCTRL O  &hm_super LS(LA(LG(LCTRL))) P  &caps_word
+&kp LSHFT  &hm_layer_slow 8 A             &hm_mod LGUI S        &hm_mod LSHFT D      &hm_layer 7 F                  &kp G                                    &kp H                 &hm_layer 7 J                  &hm_mod RSHFT K      &hm_mod LGUI L        &kp RSHFT                      &kp SQT
+&kp LALT   &kp Z                          &kp X                 &kp C                &kp V                          &kp B                                    &kp N                 &kp M                          &kp COMMA            &kp DOT               &kp FSLH                       &kp ASTERISK
+&kp UP     &kp DOWN                       &mkp MB4              &mkp MB5             &kp EQUAL                                                                                     &kp LS(LBRC)                   &kp LBKT             &to 6                 &kp LEFT                       &kp RIGHT
+                                                                                     &mo 8                          &mo 9                 &kp LC(LS(TAB))    &kp LC(TAB)           &kp LEFT_GUI                   &kp LEFT_SHIFT
+                                                                                     &mo 7                          &kp LGUI              &kp LG(TAB)        &mo 7                 &to 15                         &kp SPACE
+            >;
+        };
+
+        timing_250ms {
+            bindings = <
+&trans  &trans                             &trans                    &trans                   &trans                             &trans                              &trans                    &trans                             &trans                   &trans                    &trans                             &trans
+&trans  &trans                             &trans                    &trans                   &trans                             &trans                              &trans                    &trans                             &trans                   &trans                    &trans                             &trans
+&trans  &hm_super_250 LS(LA(LG(LCTRL))) Q  &hm_mod_slow_250 LCTRL W  &hm_mod_slow_250 LALT E  &hm_super_250 LS(LA(LG(LCTRL))) R  &hm_mod_slow_250 LSHFT T            &hm_mod_slow_250 RSHFT Y  &hm_super_250 LS(LA(LG(LCTRL))) U  &hm_mod_slow_250 LALT I  &hm_mod_slow_250 LCTRL O  &hm_super_250 LS(LA(LG(LCTRL))) P  &trans
+&trans  &hm_layer_slow_250 8 A             &hm_mod_250 LGUI S        &hm_mod_250 LSHFT D      &hm_layer_250 7 F                  &trans                              &trans                    &hm_layer_250 7 J                  &hm_mod_250 RSHFT K      &hm_mod_250 LGUI L        &trans                             &trans
+&trans  &trans                             &trans                    &trans                   &trans                             &trans                              &trans                    &trans                             &trans                   &trans                    &trans                             &trans
+&trans  &trans                             &trans                    &trans                   &trans                                                                                           &trans                             &trans                   &trans                    &trans                             &trans
+                                                                                              &trans                             &trans                    &trans    &trans                    &trans                             &trans
+                                                                                              &trans                             &trans                    &trans    &trans                    &trans                             &trans
+            >;
+        };
+
+        timing_200ms {
+            bindings = <
+&trans  &trans                             &trans                    &trans                   &trans                             &trans                              &trans                    &trans                             &trans                   &trans                    &trans                             &trans
+&trans  &trans                             &trans                    &trans                   &trans                             &trans                              &trans                    &trans                             &trans                   &trans                    &trans                             &trans
+&trans  &hm_super_200 LS(LA(LG(LCTRL))) Q  &hm_mod_slow_200 LCTRL W  &hm_mod_slow_200 LALT E  &hm_super_200 LS(LA(LG(LCTRL))) R  &hm_mod_slow_200 LSHFT T            &hm_mod_slow_200 RSHFT Y  &hm_super_200 LS(LA(LG(LCTRL))) U  &hm_mod_slow_200 LALT I  &hm_mod_slow_200 LCTRL O  &hm_super_200 LS(LA(LG(LCTRL))) P  &trans
+&trans  &hm_layer_slow_200 8 A             &hm_mod_200 LGUI S        &hm_mod_200 LSHFT D      &hm_layer_200 7 F                  &trans                              &trans                    &hm_layer_200 7 J                  &hm_mod_200 RSHFT K      &hm_mod_200 LGUI L        &trans                             &trans
+&trans  &trans                             &trans                    &trans                   &trans                             &trans                              &trans                    &trans                             &trans                   &trans                    &trans                             &trans
+&trans  &trans                             &trans                    &trans                   &trans                                                                                           &trans                             &trans                   &trans                    &trans                             &trans
+                                                                                              &trans                             &trans                    &trans    &trans                    &trans                             &trans
+                                                                                              &trans                             &trans                    &trans    &trans                    &trans                             &trans
+            >;
+        };
+
+        timing_165ms {
+            bindings = <
+&trans  &trans                             &trans                    &trans                   &trans                             &trans                              &trans                    &trans                             &trans                   &trans                    &trans                             &trans
+&trans  &trans                             &trans                    &trans                   &trans                             &trans                              &trans                    &trans                             &trans                   &trans                    &trans                             &trans
+&trans  &hm_super_165 LS(LA(LG(LCTRL))) Q  &hm_mod_slow_165 LCTRL W  &hm_mod_slow_165 LALT E  &hm_super_165 LS(LA(LG(LCTRL))) R  &hm_mod_slow_165 LSHFT T            &hm_mod_slow_165 RSHFT Y  &hm_super_165 LS(LA(LG(LCTRL))) U  &hm_mod_slow_165 LALT I  &hm_mod_slow_165 LCTRL O  &hm_super_165 LS(LA(LG(LCTRL))) P  &trans
+&trans  &hm_layer_slow_165 8 A             &hm_mod_165 LGUI S        &hm_mod_165 LSHFT D      &hm_layer_165 7 F                  &trans                              &trans                    &hm_layer_165 7 J                  &hm_mod_165 RSHFT K      &hm_mod_165 LGUI L        &trans                             &trans
+&trans  &trans                             &trans                    &trans                   &trans                             &trans                              &trans                    &trans                             &trans                   &trans                    &trans                             &trans
+&trans  &trans                             &trans                    &trans                   &trans                                                                                           &trans                             &trans                   &trans                    &trans                             &trans
+                                                                                              &trans                             &trans                    &trans    &trans                    &trans                             &trans
+                                                                                              &trans                             &trans                    &trans    &trans                    &trans                             &trans
+            >;
+        };
+
+        timing_140ms {
+            bindings = <
+&trans  &trans                             &trans                    &trans                   &trans                             &trans                              &trans                    &trans                             &trans                   &trans                    &trans                             &trans
+&trans  &trans                             &trans                    &trans                   &trans                             &trans                              &trans                    &trans                             &trans                   &trans                    &trans                             &trans
+&trans  &hm_super_140 LS(LA(LG(LCTRL))) Q  &hm_mod_slow_140 LCTRL W  &hm_mod_slow_140 LALT E  &hm_super_140 LS(LA(LG(LCTRL))) R  &hm_mod_slow_140 LSHFT T            &hm_mod_slow_140 RSHFT Y  &hm_super_140 LS(LA(LG(LCTRL))) U  &hm_mod_slow_140 LALT I  &hm_mod_slow_140 LCTRL O  &hm_super_140 LS(LA(LG(LCTRL))) P  &trans
+&trans  &hm_layer_slow_140 8 A             &hm_mod_140 LGUI S        &hm_mod_140 LSHFT D      &hm_layer_140 7 F                  &trans                              &trans                    &hm_layer_140 7 J                  &hm_mod_140 RSHFT K      &hm_mod_140 LGUI L        &trans                             &trans
+&trans  &trans                             &trans                    &trans                   &trans                             &trans                              &trans                    &trans                             &trans                   &trans                    &trans                             &trans
+&trans  &trans                             &trans                    &trans                   &trans                                                                                           &trans                             &trans                   &trans                    &trans                             &trans
+                                                                                              &trans                             &trans                    &trans    &trans                    &trans                             &trans
+                                                                                              &trans                             &trans                    &trans    &trans                    &trans                             &trans
             >;
         };
 
@@ -32,7 +582,7 @@
 &trans  &trans  &kp N7  &kp N8  &kp N9  &trans            &trans  &kp HOME  &kp UP    &kp END    &trans  &trans
 &trans  &trans  &kp N4  &kp N5  &kp N6  &trans            &trans  &kp LEFT  &kp DOWN  &kp RIGHT  &trans  &trans
 &trans  &trans  &kp N1  &kp N2  &kp N3  &trans            &trans  &trans    &trans    &trans     &trans  &trans
-&trans  &trans  &trans  &kp N0  &trans                            &trans    &trans    &trans     &trans  &trans
+&to 0   &trans  &trans  &kp N0  &trans                            &trans    &trans    &trans     &trans  &to 0
                                 &trans  &trans  &trans    &trans  &trans    &trans
                                 &trans  &trans  &trans    &trans  &trans    &trans
             >;
@@ -40,61 +590,220 @@
 
         Keyboard_Control_Layer {
             bindings = <
-&trans       &trans        &trans        &trans        &trans        &trans                  &trans  &trans           &trans           &trans           &trans           &trans
-&bt BT_CLR   &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4            &trans  &rgb_ug RGB_TOG  &rgb_ug RGB_EFF  &trans           &trans           &trans
-&sys_reset   &trans        &trans        &trans        &trans        &trans                  &rgb_ug RGB_TOG  &rgb_ug RGB_HUI  &rgb_ug RGB_SAI  &rgb_ug RGB_BRI  &rgb_ug RGB_SPI  &sys_reset
-&bootloader  &trans        &trans        &trans        &trans        &trans                  &trans  &rgb_ug RGB_HUD  &rgb_ug RGB_SAD  &rgb_ug RGB_BRD  &rgb_ug RGB_SPD  &bootloader
-&to 4        &trans        &trans        &trans        &trans        &trans                  &trans  &trans           &trans           &trans           &trans           &to 4
-&to 4        &trans        &trans        &trans        &trans                                        &trans           &trans           &trans           &trans           &to 4
-                                                       &trans        &trans        &trans    &trans  &trans           &trans
-                                                       &trans        &trans        &trans    &trans  &trans           &trans
+&to 0        &kp F1         &kp F2          &kp F3           &kp F4           &kp F5                       &kp F6           &kp F7           &kp F8           &kp F9           &kp F10          &kp F11
+&bt BT_CLR   &bt BT_SEL 0   &bt BT_SEL 1    &bt BT_SEL 2     &bt BT_SEL 3     &bt BT_SEL 4                 &trans           &rgb_ug RGB_TOG  &rgb_ug RGB_EFF  &bl BL_CYCLE     &bl BL_TOG       &trans
+&sys_reset   &bt BT_DISC 0  &bt BT_DISC 1   &bt BT_DISC 2    &bt BT_DISC 3    &bt BT_DISC 4                &rgb_ug RGB_TOG  &rgb_ug RGB_HUI  &rgb_ug RGB_SAI  &rgb_ug RGB_BRI  &rgb_ug RGB_SPI  &sys_reset
+&bootloader  &trans         &bt BT_CLR_ALL  &rgb_ug RGB_EFR  &rgb_ug RGB_EFF  &trans                       &trans           &rgb_ug RGB_HUD  &rgb_ug RGB_SAD  &rgb_ug RGB_BRD  &rgb_ug RGB_SPD  &bootloader
+&to 0        &trans         &trans          &trans           &trans           &trans                       &trans           &trans           &trans           &trans           &trans           &to 0
+&to 0        &trans         &trans          &trans           &trans                                                         &trans           &trans           &to 0            &trans           &to 0
+                                                             &rgb_ug RGB_TOG  &trans         &trans        &bt BT_CLR       &trans           &rgb_ug RGB_TOG
+                                                             &to 0            &bt BT_PRV     &bt BT_NXT    &trans           &bt BT_PRV       &bt BT_NXT
+            >;
+        };
+
+        commands_1 {
+            bindings = <
+&trans  &kp LS(BSLH)  &kp DEL       &kp LG(FSLH)   &kp LS(BSLH)   &kp BACKSLASH            &kp LA(LG(LEFT))  &kp LA(LG(RIGHT))   &kp LA(LG(LS(UP)))  &kp BACKSLASH  &kp LG(LA(LEFT))  &kp LG(LA(RIGHT))
+&trans  &kp DELETE    &kp LS(AMPS)  &kp LG(FSLH)   &kp LS(PIPE)   &kp LS(PRCNT)            &kp LS(CARET)     &kp LS(LC(LG(N4)))  &kp LS(LBRC)        &kp LS(RBRC)   &kp LS(N5)        &kp LS(LT)
+&trans  &kp GRAVE     &kp LG(C)     &kp LG(V)      &kp LS(MINUS)  &kp EQUAL                &kp LS(QMARK)     &kp LS(N9)          &kp UP              &kp LS(N0)     &kp LG(P)         &kp LS(CARET)
+&trans  &kp ESC       &kp TAB       &kp ENTER      &kp BSPC       &kp MINUS                &kp LA(LEFT)      &kp LEFT            &kp DOWN            &kp RIGHT      &trans            &kp LA(RIGHT)
+&trans  &kp LG(Z)     &kp LG(X)     &kp LG(LS(C))  &kp LG(V)      &kp LG(B)                &kp LS(COLON)     &kp SEMI            &kp LS(LT)          &kp LS(GT)     &kp LS(N8)        &kp LG(NUMBER_1)
+&trans  &trans        &trans        &trans         &trans                                                    &trans              &trans              &trans         &trans            &trans
+                                                   &trans         &trans         &trans    &mo 9             &trans              &trans
+                                                   &mkp MB4       &mkp MB5       &trans    &mo 9             &mo 9               &mo 8
+            >;
+        };
+
+        commands_2 {
+            bindings = <
+&trans         &kp F1         &kp F2         &kp F3              &kp F4         &kp F5                   &kp F6            &kp F7          &kp F8         &kp F9           &kp F10        &kp F11
+&kp LS(PRCNT)  &kp LS(AMPS)   &kp LA(DEL)    &kp LS(LC(LG(N4)))  &kp BSLH       &trans                   &kp LS(LG(N6))    &kp LS(LG(N7))  &kp RBKT       &kp LS(LT)       &kp LS(GT)     &kp LS(LBRC)
+&trans         &kp LS(TILDE)  &kp LG(X)      &kp LS(LG(V))       &kp MINUS      &kp LS(PLUS)             &kp LG(Y)         &kp LBKT        &kp LS(UP)     &kp RBKT         &kp LS(LG(P))  &trans
+&trans         &kp LG(A)      &kp LS(TAB)    &kp LS(ENTER)       &kp LA(BSPC)   &kp LS(N8)               &kp LS(LA(LEFT))  &kp LS(LEFT)    &kp LS(DOWN)   &kp LS(RIGHT)    &trans         &kp LS(LA(RIGHT))
+&trans         &kp LS(LG(Z))  &kp LS(LG(X))  &kp LS(LA(LG(C)))   &kp LS(LG(V))  &kp LS(LG(B))            &kp LS(STAR)      &kp LS(STAR)    &kp LS(GRAVE)  &kp LS(LG(DOT))  &kp LS(DLLR)   &kp LS(LG(FSLH))
+&trans         &trans         &trans         &trans              &trans                                                    &trans          &trans         &trans           &trans         &trans
+                                                                 &trans         &trans         &trans    &trans            &trans          &trans
+                                                                 &trans         &trans         &trans    &trans            &trans          &trans
+            >;
+        };
+
+        commands_3 {
+            bindings = <
+&trans  &kp LG(N1)  &kp LG(DEL)    &kp LS(LG(Z))  &kp LG(N4)    &kp LS(LG(Z))            &kp N6            &kp N7        &kp LG(N8)    &kp LG(N9)     &kp LG(N0)  &trans
+&trans  &kp LGUI    &kp LS(LG(C))  &kp LG(V)      &kp LG(R)     &trans                   &kp LS(Y)         &kp LS(LBRC)  &kp LG(UP)    &kp LS(RBRC)   &trans      &kp LG(COMMA)
+&trans  &kp LG(Q)   &kp LS(LG(C))  &kp LG(V)      &kp LG(R)     &kp LG(T)                &kp LS(Y)         &kp LS(LBKT)  &kp LG(UP)    &kp LS(RBKT)   &kp P       &trans
+&trans  &kp LS(A)   &kp LS(SEMI)   &kp SEMI       &kp LG(BSPC)  &kp LS(COMMA)            &kp LS(LG(LEFT))  &kp LG(LEFT)  &kp LG(DOWN)  &kp LG(RIGHT)  &trans      &kp LS(LG(RIGHT))
+&trans  &kp Z       &kp X          &kp C          &kp LG(V)     &kp B                    &kp LG(N)         &kp LG(M)     &kp COMMA     &kp DOT        &kp FSLH    &kp FSLH
+&trans  &trans      &trans         &trans         &trans                                                   &trans        &trans        &trans         &trans      &trans
+                                                  &trans        &trans         &trans    &trans            &trans        &trans
+                                                  &trans        &trans         &trans    &trans            &trans        &trans
+            >;
+        };
+
+        high_sens_right_left_scroll {
+            bindings = <
+&trans  &trans  &trans  &trans  &trans  &trans            &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans            &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans            &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans            &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans            &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans                            &trans  &trans  &trans  &trans  &trans
+                                &trans  &trans  &trans    &trans  &trans  &trans
+                                &trans  &trans  &trans    &trans  &trans  &trans
+            >;
+        };
+
+        low_sens_right_left_scroll {
+            bindings = <
+&trans  &trans  &trans  &trans  &trans  &trans            &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans            &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans            &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans            &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans            &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans                            &trans  &trans  &trans  &trans  &trans
+                                &trans  &trans  &trans    &trans  &trans  &trans
+                                &trans  &trans  &trans    &trans  &trans  &trans
+            >;
+        };
+
+        low2_sens_right_left_scroll {
+            bindings = <
+&trans  &trans  &trans  &trans  &trans  &trans            &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans            &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans            &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans            &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans            &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans                            &trans  &trans  &trans  &trans  &trans
+                                &trans  &trans  &trans    &trans  &trans  &trans
+                                &trans  &trans  &trans    &trans  &trans  &trans
+            >;
+        };
+
+        high2_sens_right_left_scroll {
+            bindings = <
+&trans  &trans  &trans  &trans  &trans  &trans            &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans            &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans            &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans            &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans            &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans                            &trans  &trans  &trans  &trans  &trans
+                                &trans  &trans  &trans    &trans  &trans  &trans
+                                &trans  &trans  &trans    &trans  &trans  &trans
             >;
         };
 
         Auto_Mouse_Layer {
             bindings = <
-&trans  &trans  &trans     &trans     &trans     &trans            &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans     &trans     &trans     &trans            &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans     &trans     &trans     &trans            &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &mkp RCLK  &mkp MCLK  &mkp LCLK  &trans            &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans     &trans     &trans     &trans            &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans     &trans     &trans                               &trans  &trans  &trans  &trans  &trans
-                                      &trans     &trans  &trans    &trans  &trans  &trans
-                                      &trans     &trans  &trans    &trans  &trans  &trans
+&trans           &trans     &trans          &trans           &trans            &trans                       &kp LA(LG(LEFT))  &kp LA(LG(RIGHT))  &kp LS(LA(LG(UP)))  &trans           &trans            &trans
+&kp RET          &kp LG(X)  &kp LG(C)       &kp LG(FSLH)     &kp LG(N1)        &kp ESC                      &kp LC(LEFT)      &kp RC(RIGHT)      &mkp MB4            &mkp MB5         &kp LC(UP_ARROW)  &kp LG(TAB)
+&kp LC(LS(TAB))  &kp TAB    &mmv MOVE_UP    &mmv MOVE_UP     &kp LC(UP)        &kp SPACE                    &kp LG(C)         &kp LG(V)          &mmv MOVE_UP        &mmv MOVE_UP     &kp TAB           &kp LC(TAB)
+&kp LC(DOWN)     &to 13     &to 12          &to 10           &to 11            &kp LG(TAB)                  &kp LC(UP)        &kp LC(LS(TAB))    &kp LC(TAB)         &mmv MOVE_RIGHT  &mmv MOVE_RIGHT   &kp LC(DOWN_ARROW)
+&kp F3           &kp SPACE  &mmv MOVE_DOWN  &mmv MOVE_RIGHT  &msc SCRL_DOWN    &msc SCRL_DOWN               &kp LG(TAB)       &mkp MB4           &mkp MB5            &mmv MOVE_DOWN   &kp SPACE         &kp ESC
+&to 0            &trans     &trans          &kp LC(UP)       &kp LC(DOWN)                                                     &kp LC(LEFT)       &kp LC(RIGHT)       &trans           &trans            &to 0
+                                                             &kp LEFT_COMMAND  &mkp MCLK       &kp LG(C)    &mkp RCLK         &mkp MCLK          &kp LGUI
+                                                             &mkp LCLK         &kp LEFT_SHIFT  &mkp RCLK    &mkp LCLK         &mkp LCLK          &kp LC(UP)
             >;
         };
 
-        factory_test {
+        key_cursor_move {
             bindings = <
-&kp N0  &kp N1  &kp N2  &kp N3  &kp N4  &kp N5            &kp N6  &kp N7  &kp N8  &kp N9  &kp N0  &kp N1
-&kp N2  &kp N3  &kp N4  &kp N5  &kp N6  &kp N7            &kp N8  &kp N9  &kp N0  &kp N1  &kp N2  &kp N3
-&kp N4  &kp N5  &kp N6  &kp N7  &kp N8  &kp N9            &kp N0  &kp N1  &kp N2  &kp N3  &kp N4  &kp N5
-&kp N6  &kp N7  &kp N8  &kp N9  &kp N0  &kp N1            &kp N2  &kp N3  &kp N4  &kp N5  &kp N6  &kp N7
-&kp N8  &kp N9  &kp N0  &kp N1  &kp N2  &kp N3            &kp N4  &kp N5  &kp N6  &kp N7  &kp N8  &kp N9
-&kp N0  &kp N1  &kp N2  &kp N3  &kp N4                            &kp N6  &kp N7  &kp N8  &kp N9  &kp N0
-                                &kp N1  &kp N2  &kp N3    &kp N4  &kp N5  &kp N6
-                                &kp N7  &kp N8  &kp N9    &kp N0  &kp N1  &kp N2
+&trans           &trans          &trans          &trans           &trans            &trans                       &kp LA(LG(LEFT))  &kp LA(LG(RIGHT))  &kp LS(LA(LG(UP)))  &trans           &trans            &trans
+&kp RET          &kp LG(X)       &kp LG(C)       &kp LG(FSLH)     &kp LG(N1)        &kp ESC                      &kp ESC           &kp RET            &mkp MB4            &mkp MB5         &kp LC(UP_ARROW)  &kp LG(TAB)
+&kp LC(LS(TAB))  &kp TAB         &mmv MOVE_UP    &mmv MOVE_UP     &msc SCRL_UP      &msc SCRL_UP                 &msc SCRL_UP      &msc SCRL_UP       &mmv MOVE_UP        &mmv MOVE_UP     &kp TAB           &kp LC(TAB)
+&kp LSHFT        &mmv MOVE_LEFT  &mmv MOVE_LEFT  &mmv MOVE_DOWN   &mmv MOVE_RIGHT   &to 0                        &kp LC(UP)        &mmv MOVE_LEFT     &mmv MOVE_DOWN      &mmv MOVE_RIGHT  &mmv MOVE_RIGHT   &kp LC(DOWN_ARROW)
+&kp F3           &kp SPACE       &mmv MOVE_DOWN  &mmv MOVE_RIGHT  &msc SCRL_DOWN    &msc SCRL_DOWN               &msc SCRL_DOWN    &msc SCRL_DOWN     &mmv MOVE_LEFT      &mmv MOVE_DOWN   &kp SPACE         &kp ESC
+&to 14           &trans          &trans          &kp LC(UP)       &kp LC(DOWN)                                                     &kp LC(LEFT)       &kp LC(RIGHT)       &trans           &trans            &to 14
+                                                                  &kp LEFT_COMMAND  &mkp MCLK       &kp LG(C)    &mkp RCLK         &mkp MCLK          &kp LGUI
+                                                                  &mkp LCLK         &kp LEFT_SHIFT  &mkp RCLK    &mkp LCLK         &to 0              &mkp LCLK
             >;
         };
     };
 };
 
-// right hand trackball configuration
+// right hand trackball configuration - ALZHANG: 25% faster baseline, adjusted layer sensitivities (max 16 constraint)
 
-// &trackball_peripheral_listener {
-//    input-processors =
-//     activate layer 3 within 500ms of the trackball moving
-//     <&zip_temp_layer 3 500>;
-// };
+&trackball_peripheral_listener {
+    input-processors = <&zip_xy_scaler 13 12>, <&zip_temp_layer 14 900>;
 
-//left hand trackball configuration
+    // ALZHANG: Layer 10 - high sensitivity (1.73x baseline)
+
+    high_sens {
+        layers = <10>;
+        input-processors = <&zip_xy_scaler 15 8>, <&zip_temp_layer 14 900>;
+    };
+
+    // ALZHANG: Layer 11 - low sensitivity (same as baseline)
+
+    low_sens {
+        layers = <11>;
+        input-processors = <&zip_xy_scaler 13 12>, <&zip_temp_layer 14 900>;
+    };
+
+    // ALZHANG: Layer 12 - low2 sensitivity (0.3x baseline)
+
+    low2_sens {
+        layers = <12>;
+        input-processors = <&zip_xy_scaler 5 16>, <&zip_temp_layer 14 900>;
+    };
+
+    // ALZHANG: Layer 13 - ultra-low sensitivity (0.15x baseline)
+
+    high2_sens {
+        layers = <13>;
+        input-processors = <&zip_xy_scaler 2 13>, <&zip_temp_layer 14 900>;
+    };
+};
+
+// left hand trackball configuration - ALZHANG: scroll wheel 2x faster baseline (ignoring max 16 constraint)
 
 &trackball_central_listener {
     input-processors =
-        // multiply sensitivity by 1, divide by 3 (make it slower for scrolling),
-        <&zip_xy_scaler 1 3>,
-        // make this trackball output scrolling events by default instead of cursor movement,
+        <&zip_xy_scaler 1 32>,
         <&zip_xy_to_scroll_mapper>,
-        // invert vertical scrolling so that the view moves in the same direction as the top of the trackball.,
-        <&zip_scroll_transform INPUT_TRANSFORM_Y_INVERT>;
+        <&zip_scroll_transform INPUT_TRANSFORM_Y_INVERT>,
+        <&zip_temp_layer 14 900>;
+
+    // ALZHANG: Layer 10 - high scroll sensitivity (2x baseline)
+
+    high_sens {
+        layers = <10>;
+        input-processors =
+            <&zip_xy_scaler 1 16>,
+            <&zip_xy_to_scroll_mapper>,
+            <&zip_scroll_transform INPUT_TRANSFORM_Y_INVERT>,
+            <&zip_temp_layer 14 900>;
+    };
+
+    // ALZHANG: Layer 11 - low scroll sensitivity (same as baseline)
+
+    low_sens {
+        layers = <11>;
+        input-processors =
+            <&zip_xy_scaler 1 32>,
+            <&zip_xy_to_scroll_mapper>,
+            <&zip_scroll_transform INPUT_TRANSFORM_Y_INVERT>,
+            <&zip_temp_layer 14 900>;
+    };
+
+    // ALZHANG: Layer 12 - low2 scroll sensitivity (0.5x baseline)
+
+    low2_sens {
+        layers = <12>;
+        input-processors =
+            <&zip_xy_scaler 1 64>,
+            <&zip_xy_to_scroll_mapper>,
+            <&zip_scroll_transform INPUT_TRANSFORM_Y_INVERT>,
+            <&zip_temp_layer 14 900>;
+    };
+
+    // ALZHANG: Layer 13 - high scroll sensitivity (4x baseline)
+
+    high2_sens {
+        layers = <13>;
+        input-processors =
+            <&zip_xy_scaler 1 8>,
+            <&zip_xy_to_scroll_mapper>,
+            <&zip_scroll_transform INPUT_TRANSFORM_Y_INVERT>,
+            <&zip_temp_layer 14 900>;
+    };
 };
