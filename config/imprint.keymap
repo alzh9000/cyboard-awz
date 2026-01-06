@@ -518,7 +518,7 @@
 &kp LSHFT  &hm_layer_slow 8 A             &hm_mod LGUI S        &hm_mod LSHFT D      &hm_layer 7 F                  &kp G                                    &kp H                 &hm_layer 7 J                  &hm_mod RSHFT K      &hm_mod LGUI L        &kp RSHFT                      &kp SQT
 &kp LALT   &kp Z                          &kp X                 &kp C                &kp V                          &kp B                                    &kp N                 &kp M                          &kp COMMA            &kp DOT               &kp FSLH                       &kp ASTERISK
 &kp UP     &kp DOWN                       &mkp MB4              &mkp MB5             &kp EQUAL                                                                                     &kp LS(LBRC)                   &kp LBKT             &to 6                 &kp LEFT                       &kp RIGHT
-                                                                                     &mo 8                          &mo 9                 &kp LC(LS(TAB))    &kp LC(TAB)           &kp LEFT_GUI                   &kp LEFT_SHIFT
+                                                                                     &mo 8                          &mo 9                 &kp LC(LS(TAB))    &none                 &kp LEFT_GUI                   &kp LEFT_SHIFT
                                                                                      &mo 7                          &kp LGUI              &kp LG(TAB)        &mo 7                 &to 15                         &kp SPACE
             >;
         };
