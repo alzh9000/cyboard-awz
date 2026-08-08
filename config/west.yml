@@ -9,11 +9,14 @@ manifest:
   projects:
     - name: zmk
       remote: zmkfirmware
-      revision: main
+      # Pinned to the stable ZMK release used by Cyboard's July 2026 template.
+      revision: v0.3.0
       import: app/west.yml
     - name: zmk-keyboards
       remote: Cyboard-DigitalTailor
-      revision: main
+      # Pin the physical layouts so future upstream changes cannot silently
+      # shift bindings or disable keys in an otherwise unchanged keymap.
+      revision: v2026.07
       import: config/west.yml
   self:
     path: config
